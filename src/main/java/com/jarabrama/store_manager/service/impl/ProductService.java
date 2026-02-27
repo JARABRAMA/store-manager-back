@@ -1,6 +1,7 @@
 package com.jarabrama.store_manager.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ public class ProductService implements IProductService {
 
   public List<ProductResponse> findAll() {
     return respository.findAll().stream().map(ProductResponseMapper::fromEntity).toList();
+  }
+
+  public ProductResponse getById(UUID id) {
+    return ProductResponseMapper.fromEntity(respository.findById(id).get());
   }
 
 }

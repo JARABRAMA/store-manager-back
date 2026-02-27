@@ -7,9 +7,11 @@ import com.jarabrama.store_manager.model.dtos.ProductResponse;
 import com.jarabrama.store_manager.service.IProductService;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/product")
@@ -23,6 +25,11 @@ public class ProductController {
   @GetMapping()
   public ResponseEntity<List<ProductResponse>> findAll() {
     return ResponseEntity.ok().body(service.findAll());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<ProductResponse> getMethodName(@PathVariable UUID id) {
+    return ResponseEntity.ok(service.getById(id));
   }
 
 }
