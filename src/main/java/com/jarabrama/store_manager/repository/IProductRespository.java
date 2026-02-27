@@ -1,4 +1,4 @@
-package repository;
+package com.jarabrama.store_manager.repository;
 
 import java.util.UUID;
 

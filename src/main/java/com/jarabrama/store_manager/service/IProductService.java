@@ -1,4 +1,4 @@
-package com.service;
+package com.jarabrama.store_manager.service;
 
 import java.util.List;
 
