@@ -1,8 +1,10 @@
 package com.jarabrama.store_manager.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jarabrama.store_manager.model.dtos.ProductResponse;
@@ -18,16 +20,25 @@ public class ProductService implements IProductService {
     this.respository = respository;
   }
 
-  public List<ProductResponse> findAll(String text, String category) {
-    System.out.println(String.format("FIND ALL PRODUCTS PARAMETERS: TEXT: %s CATEGORY %s", text, category));
-    if (text == null) {
-      text = "";
-    }
+  public List<ProductResponse> findAll(
+      String text,
+      String category,
+      Optional<Integer> limit,
+      Optional<Integer> page) {
+
+    // check if limit and page exists
+    int actualLimit = limit.isPresent() ? limit.get() : 10;
+    int actualPage = page.isPresent() ? page.get() : 0;
+
+    text = (text == null) ? "" : text;
+    Pageable pageable = Pageable.ofSize(actualLimit)
+        .withPage(actualPage);
+
     if (category == null) {
-      return respository.findAll(text)
+      return respository.findAll(text, pageable)
           .stream().map(ProductResponseMapper::fromEntity).toList();
     }
-    return respository.findAll(text, category)
+    return respository.findAll(text, category, pageable)
         .stream().map(ProductResponseMapper::fromEntity).toList();
   }
 

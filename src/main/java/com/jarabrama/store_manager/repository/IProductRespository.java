@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,16 +22,23 @@ public interface IProductRespository extends JpaRepository<Product, UUID> {
 			WHERE (UPPER(p.name) LIKE UPPER(CONCAT('%', :search, '%'))
 			OR UPPER(p.description) LIKE UPPER(CONCAT('%', :search, '%')))
 			AND UPPER(c.name) = UPPER(:category)
+			ORDER BY p.name
 			""")
-	List<Product> findAll(@Param("search") String search, @Param("category") String category);
+	List<Product> findAll(
+			String search,
+			String category,
+			Pageable pageable);
 
 	@Query("""
 			SELECT DISTINCT p FROM Product p
 			LEFT JOIN FETCH p.categories
 			WHERE UPPER(p.name) LIKE UPPER(CONCAT('%', :search, '%'))
 			OR UPPER(p.description) LIKE UPPER(CONCAT('%', :search, '%'))
+			ORDER BY p.name
 			""")
-	List<Product> findAll(@Param("search") String search);
+	List<Product> findAll(
+			String search,
+			Pageable pageable);
 
 	@Query("""
 			SELECT DISTINCT p FROM Product p
