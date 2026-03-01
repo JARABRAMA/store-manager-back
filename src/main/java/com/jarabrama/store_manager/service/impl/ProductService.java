@@ -19,7 +19,7 @@ public class ProductService implements IProductService {
   }
 
   public List<ProductResponse> findAll() {
-    return respository.findAllWhitCategories().stream().map(ProductResponseMapper::fromEntity).toList();
+    return respository.findAllWhithCategories().stream().map(ProductResponseMapper::fromEntity).toList();
   }
 
   public ProductResponse getById(UUID id) {
