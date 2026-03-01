@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Response<T>  {
-  private T[] data;
   private Meta metadata;
+  private T[] data;
 }
