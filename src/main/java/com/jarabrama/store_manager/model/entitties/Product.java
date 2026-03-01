@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -31,11 +32,17 @@ public class Product {
   private String description;
   private int price;
   private int stock;
+
+  @Column(name = "url_image")
   private String urlImage;
   private LocalDateTime createdAt;
 
   @ManyToMany
-  @JoinTable(name = "product_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "cateogory_id"))
+  @JoinTable(
+    name = "product_category", 
+    joinColumns = @JoinColumn(name = "product_id"), 
+    inverseJoinColumns = @JoinColumn(name = "cateogory_id")
+  )
   private List<Category> categories = new ArrayList<>();
 
 }
