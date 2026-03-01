@@ -12,10 +12,7 @@ import com.jarabrama.store_manager.model.entitties.Product;
 @Repository
 public interface IProductRespository extends JpaRepository<Product, UUID> {
 
-  @Query("""
-      SELECT DISTINCT p
-      FROM Product p
-      LEFT JOIN FETCH p.categories
-      """)
-  List<Product> findAllWhitCategories();
+ 
+  @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.categories")
+  List<Product> findAllWhithCategories(); 
 }
