@@ -54,9 +54,9 @@ public class ProductService implements IProductService {
         .build();
 
     return new Response<ProductResponse>(
-        (ProductResponse[]) pageResult.getContent()
-            .stream().map(ProductResponseMapper::fromEntity).toArray(),
-        meta);
+        meta,
+        pageResult.getContent()
+            .stream().map(ProductResponseMapper::fromEntity).toArray(ProductResponse[]::new));
 
   }
 
