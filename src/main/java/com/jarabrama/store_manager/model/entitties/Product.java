@@ -33,7 +33,7 @@ public class Product {
   private int price;
   private int stock;
 
-  @Column(name = "url_image")
+  @Column(name = "image_url")
   private String urlImage;
   private LocalDateTime createdAt;
 
