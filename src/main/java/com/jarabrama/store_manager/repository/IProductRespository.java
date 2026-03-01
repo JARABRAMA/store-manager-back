@@ -1,9 +1,9 @@
 package com.jarabrama.store_manager.repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +24,7 @@ public interface IProductRespository extends JpaRepository<Product, UUID> {
 			AND UPPER(c.name) = UPPER(:category)
 			ORDER BY p.name
 			""")
-	List<Product> findAll(
+	Page<Product> findAll(
 			String search,
 			String category,
 			Pageable pageable);
@@ -36,7 +36,7 @@ public interface IProductRespository extends JpaRepository<Product, UUID> {
 			OR UPPER(p.description) LIKE UPPER(CONCAT('%', :search, '%'))
 			ORDER BY p.name
 			""")
-	List<Product> findAll(
+	Page<Product> findAll(
 			String search,
 			Pageable pageable);
 

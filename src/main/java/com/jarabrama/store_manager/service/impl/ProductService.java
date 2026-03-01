@@ -1,13 +1,16 @@
 package com.jarabrama.store_manager.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.jarabrama.store_manager.model.dtos.Meta;
 import com.jarabrama.store_manager.model.dtos.ProductResponse;
+import com.jarabrama.store_manager.model.dtos.Response;
+import com.jarabrama.store_manager.model.entitties.Product;
 import com.jarabrama.store_manager.model.mappers.ProductResponseMapper;
 import com.jarabrama.store_manager.repository.IProductRespository;
 import com.jarabrama.store_manager.service.IProductService;
@@ -20,7 +23,7 @@ public class ProductService implements IProductService {
     this.respository = respository;
   }
 
-  public List<ProductResponse> findAll(
+  public Response<ProductResponse> findAll(
       String text,
       String category,
       Optional<Integer> limit,
@@ -34,12 +37,27 @@ public class ProductService implements IProductService {
     Pageable pageable = Pageable.ofSize(actualLimit)
         .withPage(actualPage);
 
+    Page<Product> pageResult;
     if (category == null) {
-      return respository.findAll(text, pageable)
-          .stream().map(ProductResponseMapper::fromEntity).toList();
+      pageResult = respository.findAll(text, pageable);
+    } else {
+      pageResult = respository.findAll(text, category, pageable);
     }
-    return respository.findAll(text, category, pageable)
-        .stream().map(ProductResponseMapper::fromEntity).toList();
+
+    Meta meta = Meta.builder()
+        .totalElements((int) pageResult.getTotalElements())
+        .totalPages(pageResult.getTotalPages())
+        .page(pageResult.getNumber())
+        .pageSize(pageResult.getSize())
+        .hasNext(pageResult.hasNext())
+        .hasPrevious(pageResult.hasPrevious())
+        .build();
+
+    return new Response<ProductResponse>(
+        (ProductResponse[]) pageResult.getContent()
+            .stream().map(ProductResponseMapper::fromEntity).toArray(),
+        meta);
+
   }
 
   public ProductResponse getById(UUID id) {

@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jarabrama.store_manager.model.dtos.ProductResponse;
+import com.jarabrama.store_manager.model.dtos.Response;
 import com.jarabrama.store_manager.service.IProductService;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +25,7 @@ public class ProductController {
   }
 
   @GetMapping()
-  public ResponseEntity<List<ProductResponse>> findAll(
+  public ResponseEntity<Response<ProductResponse>> findAll(
     @RequestParam(required = false) String text, 
     @RequestParam(required = false) String category,
     @RequestParam(required = false) Optional<Integer> limit, 
