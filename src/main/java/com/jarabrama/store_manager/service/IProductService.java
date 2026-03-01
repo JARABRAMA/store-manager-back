@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.jarabrama.store_manager.model.dtos.ProductResponse;
 
 public interface IProductService {
-  List<ProductResponse> findAll(); 
+  List<ProductResponse> findAll(String text, String category);
 
-  ProductResponse getById(UUID id); 
+  ProductResponse getById(UUID id);
 }
