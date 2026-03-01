@@ -5,6 +5,6 @@ import java.util.UUID;
 
 public record ProductResponse(
   UUID id, String name, String description, 
-  String urlImage, int price, int stock, List<CategoryResponse> category
+  String urlImage, int price, int stock, List<String> categories
 ) {
 }

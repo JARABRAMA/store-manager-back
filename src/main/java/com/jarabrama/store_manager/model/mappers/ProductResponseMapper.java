@@ -8,6 +8,6 @@ public class ProductResponseMapper {
   public static ProductResponse fromEntity(Product product) {
     return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getUrlImage(),
         product.getPrice(), product.getStock(),
-        product.getCategories().stream().map(CategoryResponseMapper::fromEntity).toList());
+        product.getCategories().stream().map(c -> c.getName()).toList());
   }
 }
