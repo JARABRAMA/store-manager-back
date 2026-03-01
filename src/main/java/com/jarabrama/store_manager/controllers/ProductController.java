@@ -1,6 +1,7 @@
 package com.jarabrama.store_manager.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jarabrama.store_manager.model.dtos.ProductResponse;
@@ -23,8 +24,11 @@ public class ProductController {
   }
 
   @GetMapping()
-  public ResponseEntity<List<ProductResponse>> findAll() {
-    return ResponseEntity.ok().body(service.findAll());
+  public ResponseEntity<List<ProductResponse>> findAll(
+    @RequestParam(required = false) String text, 
+    @RequestParam(required = false) String category
+  ) {
+    return ResponseEntity.ok().body(service.findAll(text, category));
   }
 
   @GetMapping("/{id}")
